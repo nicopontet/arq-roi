@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.roiplanner.presist;
+package com.roiplanner.plan.persistence;
 
-import com.roiplanner.plan.Plan;
+import com.roiplanner.plan.imp.entity.Plan;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,7 +14,7 @@ import javax.ejb.Local;
  * @author Brayan
  */
 @Local
-public interface PlanFacadeLocal {
+public interface PlanPersistenceLocal {
 
     void create(Plan shipment);
 

@@ -1,13 +1,13 @@
-package com.roiplanner.presist;
+package com.roiplanner.plan.persistence;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 
-public abstract class AbstractFacade<T> {
+public abstract class AbstractPersistence<T> {
 
     private Class<T> entityClass;
 
-    public AbstractFacade(Class<T> entityClass) {
+    public AbstractPersistence(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 

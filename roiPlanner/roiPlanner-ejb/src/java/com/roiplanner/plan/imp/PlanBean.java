@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.roiplanner.plan;
+package com.roiplanner.plan.imp;
 
-import com.roiplanner.presist.PlanFacadeLocal;
+import com.roiplanner.plan.imp.entity.Plan;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 
 import javax.ejb.Stateless;
+import com.roiplanner.plan.persistence.PlanPersistenceLocal;
 
 /**
  *
@@ -20,7 +21,7 @@ import javax.ejb.Stateless;
 public class PlanBean implements PlanBeanLocal {
 
     @EJB
-    private PlanFacadeLocal planFacade;
+    private PlanPersistenceLocal planFacade;
     
     public PlanBean(){}
     

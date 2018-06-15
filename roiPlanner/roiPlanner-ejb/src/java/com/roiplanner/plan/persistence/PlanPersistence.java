@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.roiplanner.presist;
+package com.roiplanner.plan.persistence;
 
-import com.roiplanner.plan.Plan;
+import com.roiplanner.plan.imp.entity.Plan;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Brayan
  */
 @Stateless
-public class PlanFacade extends AbstractFacade<Plan> implements PlanFacadeLocal {
+public class PlanPersistence extends AbstractPersistence<Plan> implements PlanPersistenceLocal {
 
     @PersistenceContext(unitName = "roiPlanner-ejbPU")
     private EntityManager em;
@@ -25,7 +25,7 @@ public class PlanFacade extends AbstractFacade<Plan> implements PlanFacadeLocal 
         return em;
     }
 
-    public PlanFacade() {
+    public PlanPersistence() {
         super(Plan.class);
     }
     

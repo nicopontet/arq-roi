@@ -6,8 +6,8 @@
 package com.roiplanner.resources;
 
 import com.google.gson.Gson;
-import com.roiplanner.plan.Plan;
-import com.roiplanner.plan.PlanBeanLocal;
+import com.roiplanner.plan.imp.entity.Plan;
+import com.roiplanner.plan.imp.PlanBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
