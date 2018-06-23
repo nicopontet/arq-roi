@@ -29,20 +29,19 @@ public class TypeData implements Serializable {
     @Column(name="typedata_id")
     int id;
     String name;
-    
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn( name= "child_typedata_id")
-    List<TypeData> typeParams;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="typedata")
+    List<AttributeType> attributesType;
+
     
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "service_operation_id")
     ServiceOperation serviceOperation;    
 
     public TypeData(){}
-    public TypeData(int id, String name, List<TypeData> typeparams) {
+    public TypeData(int id, String name, List<AttributeType> attributeType) {
         this.id = id;
         this.name = name;
-        this.typeParams = typeparams;
+        this.attributesType = attributeType;
     }
 
     public int getId() {
@@ -61,13 +60,23 @@ public class TypeData implements Serializable {
         this.name = name;
     }
 
-    public List<TypeData> getTypeparams() {
-        return typeParams;
+    public List<AttributeType> getAttributesType() {
+        return attributesType;
     }
 
-    public void setTypeparams(List<TypeData> typeparams) {
-        this.typeParams = typeparams;
+    public void setAttributesType(List<AttributeType> attributesType) {
+        this.attributesType = attributesType;
     }
+
+    public ServiceOperation getServiceOperation() {
+        return serviceOperation;
+    }
+
+    public void setServiceOperation(ServiceOperation serviceOperation) {
+        this.serviceOperation = serviceOperation;
+    }
+
+  
     
 }
 /*tipo datos basico

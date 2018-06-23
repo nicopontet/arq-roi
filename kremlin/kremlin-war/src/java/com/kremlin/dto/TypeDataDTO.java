@@ -5,29 +5,26 @@
  */
 package com.kremlin.dto;
 
+import com.kremlin.imp.entity.AttributeType;
 import java.io.Serializable;
 import java.util.List;
 
 
 public class TypeDataDTO  {
   
-    String name;
-    //List<TypeDataDTO> typeParams;
-    ServiceOperationDTO serviceOperation;   
-    
-    List<TypeDataDTO> typeParams;
-    transient TypeDataDTO parent;
+   String name;
+   ServiceOperationDTO serviceOperation;   
+   List<AttributeTypeDTO> attributesType;
 
    
 
     public TypeDataDTO(){}
-    public TypeDataDTO(String name, List<TypeDataDTO> typeparams,ServiceOperationDTO serviceOperation) {
-   
-        this.name = name;
-        this.typeParams = typeparams;
-        this.serviceOperation=serviceOperation;
-    }
 
+    public TypeDataDTO(String name, ServiceOperationDTO serviceOperation, List<AttributeTypeDTO> attributesType) {
+        this.name = name;
+        this.serviceOperation = serviceOperation;
+        this.attributesType = attributesType;
+    }
 
     public String getName() {
         return name;
@@ -37,20 +34,25 @@ public class TypeDataDTO  {
         this.name = name;
     }
 
-    public List<TypeDataDTO> getTypeparams() {
-        return typeParams;
-    }
-
-    public void setTypeparams(List<TypeDataDTO> typeparams) {
-        this.typeParams = typeparams;
-    }
-     public ServiceOperationDTO getServiceOperation() {
+    public ServiceOperationDTO getServiceOperation() {
         return serviceOperation;
     }
 
     public void setServiceOperation(ServiceOperationDTO serviceOperation) {
         this.serviceOperation = serviceOperation;
     }
+
+    public List<AttributeTypeDTO> getAttributesType() {
+        return attributesType;
+    }
+
+    public void setAttributesType(List<AttributeTypeDTO> attributesType) {
+        this.attributesType = attributesType;
+    }
+    
+
+
+   
     
 }
 /*tipo datos basico
