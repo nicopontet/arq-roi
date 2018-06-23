@@ -47,6 +47,30 @@ public class ServiceOperation implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy="serviceOperation")
     List<TypeData> typesData;
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    public String getAdditionalData() {
+        return additionalData;
+    }
+
+    public void setAdditionalData(String additionalData) {
+        this.additionalData = additionalData;
+    }
+
+    public List<TypeData> getTypesData() {
+        return typesData;
+    }
+
+    public void setTypesData(List<TypeData> typesData) {
+        this.typesData = typesData;
+    }
     
     public ServiceOperation(){}
     public ServiceOperation(int id, String name, String typeReturn, List<ServiceOperationParam> serviceParm, TypeCommunicationEnum typeCommunication, String resource,String additionalData) {
@@ -84,15 +108,6 @@ public class ServiceOperation implements Serializable {
         this.typeReturn = typeReturn;
     }
 
-    public List<ServiceOperationParam> getListParmOperation() {
-        return serviceParams;
-     
-    }
-
-    public void setListParmOperation(List<ServiceOperationParam> listParmOperation) {
-        this.serviceParams = listParmOperation;
-    }
-
     public TypeCommunicationEnum getTypeCommunication() {
         return typeCommunication;
     }
@@ -117,13 +132,6 @@ public class ServiceOperation implements Serializable {
         this.serviceParams = serviceParams;
     }
 
-    public String getAditionaldata() {
-        return additionalData;
-    }
-
-    public void setAditionaldata(String aditionaldata) {
-        this.additionalData = aditionaldata;
-    }
     
     
 }

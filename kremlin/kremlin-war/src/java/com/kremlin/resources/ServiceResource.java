@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 
 import com.kremlin.dto.ServiceOperationDTO;
 import com.kremlin.imp.entity.ServiceOperation;
+import com.kremlin.imp.entity.ServiceOperationParam;
+import com.kremlin.imp.entity.TypeData;
 import com.kremlin.impl.ServiceBeanLocal;
 import java.lang.reflect.Type;
 

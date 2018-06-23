@@ -83,14 +83,6 @@ public class ServiceOperationDTO {
         this.typeReturn = typeReturn;
     }
 
-    public List<ServiceOperationParamDTO> getListParmOperation() {
-        return serviceParams;
-     
-    }
-
-    public void setListParmOperation(List<ServiceOperationParamDTO> listParmOperation) {
-        this.serviceParams = listParmOperation;
-    }
 
     public TypeCommunicationEnum getTypeCommunication() {
         return typeCommunication;
