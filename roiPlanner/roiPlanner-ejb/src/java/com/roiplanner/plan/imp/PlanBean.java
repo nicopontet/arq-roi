@@ -27,13 +27,9 @@ public class PlanBean implements PlanBeanLocal {
     
     @Override
     public List<Plan> getPlan() {
-        List<Plan> plan=new ArrayList<Plan>();
-        //plan.add(new Plan(1,false,false));
-        //plan.add(new Plan(2,false,true));
         planFacade.create(new Plan(1,false,false));
-         planFacade.create(new Plan(2,false,true));
-        plan=planFacade.findAll();
-        return plan;
+        planFacade.create(new Plan(2,false,true));
+        return planFacade.findAll();
     }
 
     // Add business logic below. (Right-click in editor and choose
