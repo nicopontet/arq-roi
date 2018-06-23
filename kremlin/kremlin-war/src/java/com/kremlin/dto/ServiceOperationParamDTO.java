@@ -17,26 +17,16 @@ import javax.persistence.ManyToOne;
  * @author NICO_CUARTO
  */
 class ServiceOperationParamDTO {
-    int id;
     String name;
     String typeData;
     int orderParm;
 
     public ServiceOperationParamDTO(){}
-    public ServiceOperationParamDTO(int id, String name, String typeParm, int order) {
-        this.id = id;
+    public ServiceOperationParamDTO(String name, String typeParm, int order) {
         this.name = name;
         this.typeData = typeParm;
         this.orderParm = order;
     }
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }

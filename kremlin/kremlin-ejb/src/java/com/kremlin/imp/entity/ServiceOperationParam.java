@@ -27,7 +27,7 @@ public class ServiceOperationParam implements Serializable{
     String typeData;
     int orderParm;
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "service_operation_id")
+    @JoinColumn(name = "service")
     ServiceOperation service;
     
     

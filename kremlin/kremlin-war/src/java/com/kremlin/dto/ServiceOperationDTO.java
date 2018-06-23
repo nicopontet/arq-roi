@@ -15,7 +15,6 @@ import com.kremlin.imp.entity.TypeData;
  */
 public class ServiceOperationDTO {
 
-    int id;
     String name;
     String typeReturn;
     List<ServiceOperationParamDTO> serviceParams;   
@@ -49,22 +48,14 @@ public class ServiceOperationDTO {
     }
     
     public ServiceOperationDTO(){}
-    public ServiceOperationDTO(int id, String name, String typeReturn, List<ServiceOperationParamDTO> serviceParm, TypeCommunicationEnum typeCommunication, String resources, String aditionaldata) {
-        this.id = id;
+    public ServiceOperationDTO(String name, String typeReturn, List<ServiceOperationParamDTO> serviceParm, TypeCommunicationEnum typeCommunication, String resources, String aditionaldata) {
+
         this.name = name;
         this.typeReturn = typeReturn;
         this.serviceParams = serviceParm;
         this.typeCommunication = typeCommunication;
         this.resources = resources;
         this.additionalData=aditionaldata;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

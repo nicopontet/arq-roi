@@ -30,7 +30,7 @@ public class TypeData implements Serializable {
     int id;
     String name;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn( name= "child_typedata_id")
     List<TypeData> typeParams;
     

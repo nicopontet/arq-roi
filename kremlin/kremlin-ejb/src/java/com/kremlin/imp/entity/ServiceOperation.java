@@ -37,7 +37,7 @@ public class ServiceOperation implements Serializable {
     List<ServiceOperationParam> serviceParams;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "application_id")
+    @JoinColumn(name = "application")
     Application application;    
     
     @Enumerated(EnumType.STRING)       

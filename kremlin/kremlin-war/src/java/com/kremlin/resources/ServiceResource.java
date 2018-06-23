@@ -55,7 +55,6 @@ public class ServiceResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerService(String jsonServices) {
         
-        int a=0;
         //operationsBeanLocal.RegisterService(operation);
         ServiceOperation op=gson.fromJson(jsonServices, ServiceOperation.class);
         serviceBeanLocal.registerService(op);
@@ -76,7 +75,6 @@ public class ServiceResource {
         if (services == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-
         return Response
                 .status(Response.Status.OK)
                 .entity(gson.toJson(servicesDTO))

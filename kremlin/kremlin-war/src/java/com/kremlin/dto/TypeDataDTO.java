@@ -11,7 +11,6 @@ import java.util.List;
 
 public class TypeDataDTO  {
   
-    int id;
     String name;
     //List<TypeDataDTO> typeParams;
     ServiceOperationDTO serviceOperation;   
@@ -22,20 +21,13 @@ public class TypeDataDTO  {
    
 
     public TypeDataDTO(){}
-    public TypeDataDTO(int id, String name, List<TypeDataDTO> typeparams,ServiceOperationDTO serviceOperation) {
-        this.id = id;
+    public TypeDataDTO(String name, List<TypeDataDTO> typeparams,ServiceOperationDTO serviceOperation) {
+   
         this.name = name;
         this.typeParams = typeparams;
         this.serviceOperation=serviceOperation;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
