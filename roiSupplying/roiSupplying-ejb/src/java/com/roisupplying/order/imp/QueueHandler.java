@@ -13,20 +13,17 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/MyQueue")
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/RoiSupplyingQueue")
     ,
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 })
-public class ReceiverBean implements MessageListener {
-    
+public class QueueHandler implements MessageListener {
+
     @EJB
     private OrderPersistenceLocal orderPersistenceLocal;
     
-    
-    public ReceiverBean() {
-    }
+    public QueueHandler() {}
     
     @Override
     public void onMessage(Message message) {
@@ -37,7 +34,7 @@ public class ReceiverBean implements MessageListener {
             OrderSupplying o = new OrderSupplying();
             orderPersistenceLocal.create(o);
         } catch (JMSException ex) {
-            Logger.getLogger(ReceiverBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QueueHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
