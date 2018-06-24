@@ -10,8 +10,7 @@ import com.google.gson.Gson;
 
 import com.kremlin.dto.ServiceOperationDTO;
 import com.kremlin.imp.entity.ServiceOperation;
-import com.kremlin.imp.entity.ServiceOperationParam;
-import com.kremlin.imp.entity.TypeData;
+import com.kremlin.impl.JMSImplementation;
 import com.kremlin.impl.ServiceBeanLocal;
 import java.lang.reflect.Type;
 
@@ -22,6 +21,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -80,5 +80,18 @@ public class ServiceResource {
                 .entity(gson.toJson(servicesDTO))
                 .build();
 
+    }
+    
+    @POST
+    @Path("/{operationName}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response callService(@PathParam("operationName") String operationName, String jsonBody) {
+        
+        JMSImplementation jmsImp = new JMSImplementation("jms/RoiSupplyingConnectionFactory","jms/RoiSupplyingQueue");
+        jmsImp.sendMessage(jsonBody);
+        
+        return Response
+                .status(Response.Status.OK)
+                .build();
     }
 }
