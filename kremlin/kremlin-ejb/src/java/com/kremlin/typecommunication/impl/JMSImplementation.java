@@ -1,5 +1,5 @@
 
-package com.kremlin.impl;
+package com.kremlin.typecommunication.impl;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

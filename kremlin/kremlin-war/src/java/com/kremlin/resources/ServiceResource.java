@@ -10,11 +10,15 @@ import com.google.gson.Gson;
 
 import com.kremlin.dto.ServiceOperationDTO;
 import com.kremlin.imp.entity.ServiceOperation;
-import com.kremlin.impl.JMSImplementation;
+import com.kremlin.impl.CallServiceOperationException;
+import com.kremlin.impl.InvalidNameServiceOperationException;
+import com.kremlin.typecommunication.impl.JMSImplementation;
 import com.kremlin.impl.ServiceBeanLocal;
 import java.lang.reflect.Type;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 import javax.ws.rs.Consumes;
@@ -54,13 +58,23 @@ public class ServiceResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerService(String jsonServices) {
-        
-        //operationsBeanLocal.RegisterService(operation);
+         
+       //si el usuario es externo para fuera. No autorizado
+    
         ServiceOperation op=gson.fromJson(jsonServices, ServiceOperation.class);
-        serviceBeanLocal.registerService(op);
-        return Response
+        try {
+            serviceBeanLocal.registerService(op);
+            return Response
                 .status(Response.Status.OK)
                 .build();
+        } catch (InvalidNameServiceOperationException ex) {
+            Logger.getLogger(ServiceResource.class.getName()).log(Level.SEVERE, null, ex);
+             return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity(ex.getMessage())
+                .build();
+        }
+       
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -87,11 +101,19 @@ public class ServiceResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response callService(@PathParam("operationName") String operationName, String jsonBody) {
         
-        JMSImplementation jmsImp = new JMSImplementation("jms/RoiSupplyingConnectionFactory","jms/RoiSupplyingQueue");
-        jmsImp.sendMessage(jsonBody);
-        
-        return Response
+        try {
+            serviceBeanLocal.sendData(operationName, jsonBody);
+              return Response
                 .status(Response.Status.OK)
                 .build();
+        } catch (CallServiceOperationException ex) {
+            Logger.getLogger(ServiceResource.class.getName()).log(Level.SEVERE, null, ex);
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity(ex.getMessage())
+                .build();
+        }
+        
+      
     }
 }

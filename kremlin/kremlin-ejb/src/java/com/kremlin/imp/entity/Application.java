@@ -31,6 +31,7 @@ public class Application implements Serializable {
     
     @OneToOne(fetch=FetchType.LAZY, mappedBy="application")
     UserKremlin owner;
+   // int UserId
     @OneToMany(cascade = CascadeType.ALL, mappedBy="application")
     List<ServiceOperation> servicesoperations;
     

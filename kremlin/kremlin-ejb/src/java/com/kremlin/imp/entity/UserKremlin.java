@@ -1,10 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.kremlin.imp.entity;
 
+//import com.kremlin.imp.entity.Application;
+//import com.kremlin.imp.entity.Application;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,10 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-/**
- *
- * @author NICO_CUARTO
- */
+
 @Entity
 public class UserKremlin implements Serializable {
    @Id
@@ -26,8 +21,9 @@ public class UserKremlin implements Serializable {
    String username;
    String password;
    @OneToOne(fetch=FetchType.LAZY)
-   @JoinColumn(name="application_id")
+   @JoinColumn(name="application_id")    
    Application application;
+   boolean userExternal;
 
     public UserKremlin() {
     }
@@ -40,6 +36,14 @@ public class UserKremlin implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public boolean isUserExternal() {
+        return userExternal;
+    }
+
+    public void setUserExternal(boolean userExternal) {
+        this.userExternal = userExternal;
     }
 
     public void setId(int id) {

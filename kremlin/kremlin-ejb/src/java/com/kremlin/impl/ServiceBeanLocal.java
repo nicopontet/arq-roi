@@ -15,6 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface ServiceBeanLocal {
-    void registerService(ServiceOperation service);
+    void registerService(ServiceOperation service) throws InvalidNameServiceOperationException;
     List<ServiceOperation> getServices();
+    void sendData(String serviceOperationName,String data) throws CallServiceOperationException;
 }

@@ -5,6 +5,7 @@
  */
 package com.kremlin.imp.entity;
 
+import com.kremlin.typecommunication.impl.TypeCommunicationEnum;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;

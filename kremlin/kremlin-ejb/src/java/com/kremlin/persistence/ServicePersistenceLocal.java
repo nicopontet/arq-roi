@@ -30,4 +30,6 @@ public interface ServicePersistenceLocal {
 
     int count();
     
+    ServiceOperation findServiceOperationByName(String name);
+    
 }

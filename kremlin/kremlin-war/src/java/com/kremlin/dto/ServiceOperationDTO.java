@@ -6,7 +6,7 @@
 package com.kremlin.dto;
 
 import java.util.List;
-import com.kremlin.imp.entity.TypeCommunicationEnum;
+import com.kremlin.typecommunication.impl.TypeCommunicationEnum;
 import com.kremlin.imp.entity.TypeData;
 
 /**
