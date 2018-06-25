@@ -1,6 +1,7 @@
 
 package com.roisupplying.order.imp;
 
+import com.google.gson.Gson;
 import com.roisupplying.order.entity.OrderSupplying;
 import com.roisupplying.order.persistence.OrderPersistenceLocal;
 import java.util.logging.Level;
@@ -22,17 +23,18 @@ public class QueueHandler implements MessageListener {
 
     @EJB
     private OrderPersistenceLocal orderPersistenceLocal;
+    private Gson gson;
     
-    public QueueHandler() {}
+    public QueueHandler() {
+        gson = new Gson();
+    }
     
     @Override
     public void onMessage(Message message) {
-        System.out.println("reading messages:");
         try {
             TextMessage txt = (TextMessage) message;
-            System.out.println("LLEGO DESDE LA QUEUE = " + txt.getText());
-            OrderSupplying o = new OrderSupplying();
-            orderPersistenceLocal.create(o);
+            OrderSupplying newOrder = gson.fromJson(txt.getText(), OrderSupplying.class);
+            orderPersistenceLocal.create(newOrder);
         } catch (JMSException ex) {
             Logger.getLogger(QueueHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

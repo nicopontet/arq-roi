@@ -1,5 +1,5 @@
 
-package com.roisupplying.dto;
+package com.roiplanner.dto;
 
 public class ServiceOperationParamDTO {
     String name;

@@ -14,6 +14,7 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.kremlin.resources.LoginResource.class);
         resources.add(com.kremlin.resources.ServiceResource.class);
     }
     

@@ -1,16 +1,14 @@
 
-package com.roisupplying.order.imp;
+package com.roiplanner.plan.imp;
 
 import com.google.gson.Gson;
-import com.roisupplying.dto.ServiceOperationDTO;
-import com.roisupplying.dto.ServiceOperationParamDTO;
-import com.roisupplying.dto.TypeDataDTO;
+import com.roiplanner.dto.ServiceOperationDTO;
+import com.roiplanner.dto.ServiceOperationParamDTO;
+import com.roiplanner.dto.TypeDataDTO;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
+import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -22,7 +20,7 @@ import javax.ws.rs.core.Response;
 @Startup
 @LocalBean
 public class RegistrationBean {
-    
+
     private Gson gson;
     
     @PostConstruct
@@ -33,24 +31,12 @@ public class RegistrationBean {
     
     public void registerOperation(){
         ServiceOperationDTO serviceOperation = new ServiceOperationDTO();
-        serviceOperation.setName("CreateOrder");
+        serviceOperation.setName("CreatePlan");
         serviceOperation.setTypeReturn("void");
-        serviceOperation.setTypeCommunication("JMS");
-        serviceOperation.setResources("jms/RoiSupplyingConnectionFactory");
-        serviceOperation.setAdditionalData("jms/RoiSupplyingQueue");
-        List<ServiceOperationParamDTO> parameters = new ArrayList<ServiceOperationParamDTO>();
-        parameters.add(new ServiceOperationParamDTO("orderAction", "String", 1));
-        //int clientId;
-        parameters.add(new ServiceOperationParamDTO("clientId", "int", 2));
-        //Date startDate;
-        parameters.add(new ServiceOperationParamDTO("startDate", "Date", 3));
-        //int hiredVolume;
-        parameters.add(new ServiceOperationParamDTO("hiredVolume", "int", 4));
-        //int serviceStationNumber;
-        parameters.add(new ServiceOperationParamDTO("serviceStationNumber", "int", 5));
-        //int closingBillingDate;
-        parameters.add(new ServiceOperationParamDTO("closingBillingDate", "int", 6));
-        serviceOperation.setServiceParams(parameters);
+        serviceOperation.setTypeCommunication("REST");
+        serviceOperation.setResources("http://localhost:8080/roiPlanner-war/plans");
+        serviceOperation.setAdditionalData("POST");
+        serviceOperation.setServiceParams(new ArrayList<ServiceOperationParamDTO>());
         serviceOperation.setTypesData(new ArrayList<TypeDataDTO>());
         Client client = ClientBuilder.newClient();
         Response response = client.target("http://localhost:8080/kremlin-war/services")

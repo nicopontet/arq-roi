@@ -8,12 +8,12 @@ package com.roiplanner.resources;
 import com.google.gson.Gson;
 import com.roiplanner.plan.imp.entity.Plan;
 import com.roiplanner.plan.imp.PlanBeanLocal;
-import com.roiplanner.plan.imp.PlannerMessageSenderBean;
-import com.roiplanner.plan.imp.PlannerMessageSenderBeanLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -26,8 +26,6 @@ import javax.ws.rs.core.Response;
 @Path("plans")
 public class PlanResource {
    
-    private PlannerMessageSenderBeanLocal planSender;
-    
     @EJB
     private PlanBeanLocal planBeanLocal;
     
@@ -40,16 +38,26 @@ public class PlanResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPlans() throws NamingException {
-        this.planSender = new PlannerMessageSenderBean("jms/ConnectionFactory","jms/MyQueue");
-        /*List<Plan> plans = planBeanLocal.getPlan();
+        List<Plan> plans = planBeanLocal.getPlan();
 
         if (plans == null) {
             return Response.status(Response.Status.NO_CONTENT).build();
-        }*/
-        planSender.sendMessage("");
+        }
+        
         return Response
                 .status(Response.Status.OK)
-                .entity(gson.toJson("plans"))
+                .entity(gson.toJson(plans))
+                .build();
+    }
+    
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createPlan(String jsonPlan) {
+        Plan newPlan = gson.fromJson(jsonPlan, Plan.class);
+        planBeanLocal.createPlan(newPlan);
+        return Response
+                .status(Response.Status.OK)
+                //.entity(gson.toJson(""))
                 .build();
     }
 }

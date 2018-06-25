@@ -1,32 +1,72 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.roiplanner.plan.imp.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author NICO_CUARTO
- */
 @Entity
 public class Plan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int planId;
-    boolean canceled;
-    boolean approved;
+    private int planId;
+    private int orderId;
+    private List<Section> sections;
+    private boolean canceled;
+    private boolean approved;
 
     public Plan(){}
-    public Plan(int planId, boolean canceled, boolean approved) {
+    
+    public Plan(int planId,int orderId,boolean canceled, boolean approved,List<Section> sections) {
         this.planId = planId;
         this.canceled = canceled;
         this.approved = approved;
+        this.sections = sections;
+        this.orderId = orderId;
     }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+    
+    public int getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(int planId) {
+        this.planId = planId;
+    }
+
+    public List<Section> getSections() {
+        return sections;
+    }
+
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+    
+    
 }
