@@ -1,6 +1,7 @@
 
 package com.roisupplying.order.entity;
 
+import com.roisupplying.dto.OrderSupplyingDTO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -17,23 +18,34 @@ public class OrderSupplying implements Serializable  {
     Date startDate;
     int hiredVolume;
     int serviceStationNumber;
-    int closingBillingDate;
+    Date closingBillingDate;
+    boolean cancelled;
 
     public OrderSupplying(){}
-    public OrderSupplying(int clientId, Date startDate, int hiredVolume, int serviceStationNumber, int closingBillingDate) {
+    
+    public OrderSupplying(int clientId, Date startDate, int hiredVolume, int serviceStationNumber, Date closingBillingDate) {
         this.clientId = clientId;
         this.startDate = startDate;
         this.hiredVolume = hiredVolume;
         this.serviceStationNumber = serviceStationNumber;
         this.closingBillingDate = closingBillingDate;
+        this.cancelled = false;
     }
-
+    
     public int getOrderId() {
         return orderId;
     }
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public int getClientId() {
@@ -68,11 +80,11 @@ public class OrderSupplying implements Serializable  {
         this.serviceStationNumber = serviceStationNumber;
     }
 
-    public int getClosingBillingDate() {
+    public Date getClosingBillingDate() {
         return closingBillingDate;
     }
 
-    public void setClosingBillingDate(int closingBillingDate) {
+    public void setClosingBillingDate(Date closingBillingDate) {
         this.closingBillingDate = closingBillingDate;
     }
     

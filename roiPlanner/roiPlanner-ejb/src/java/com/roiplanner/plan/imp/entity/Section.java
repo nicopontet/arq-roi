@@ -3,15 +3,15 @@ package com.roiplanner.plan.imp.entity;
 
 public class Section {
     int sectionId;
-    int serviceStation;
-    int actuator;
+    int sourceId;
+    int actuatorId;
     
     public Section(){}
 
-    public Section(int sectionId, int serviceStation, int actuator) {
+    public Section(int sectionId, int sourceId, int actuatorId) {
         this.sectionId = sectionId;
-        this.serviceStation = serviceStation;
-        this.actuator = actuator;
+        this.sourceId = sourceId;
+        this.actuatorId = actuatorId;
     }
     
     public int getSectionId() {
@@ -22,21 +22,19 @@ public class Section {
         this.sectionId = sectionId;
     }
 
-    public int getServiceStation() {
-        return serviceStation;
+    public int getSourceId() {
+        return sourceId;
     }
 
-    public void setServiceStation(int serviceStation) {
-        this.serviceStation = serviceStation;
+    public void setSourceId(int sourceId) {
+        this.sourceId = sourceId;
     }
 
-    public int getActuator() {
-        return actuator;
+    public int getActuatorId() {
+        return actuatorId;
     }
 
-    public void setActuator(int actuator) {
-        this.actuator = actuator;
+    public void setActuatorId(int actuatorId) {
+        this.actuatorId = actuatorId;
     }
-    
-    
 }
