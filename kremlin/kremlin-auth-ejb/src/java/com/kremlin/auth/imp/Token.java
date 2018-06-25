@@ -25,25 +25,27 @@ import javax.persistence.OneToOne;
 public class Token implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int token;
+    int id;
+    String token;
     String userName;
     String date; 
 
     public Token() {
     }
 
-    public Token(String user) {
+    public Token(String token,String user) {
+        this.token = token;
         this.userName = user;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         this.date=dateFormat.format(date);
     }
 
-    public int getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(String token) {
         this.token = token;
     }
 

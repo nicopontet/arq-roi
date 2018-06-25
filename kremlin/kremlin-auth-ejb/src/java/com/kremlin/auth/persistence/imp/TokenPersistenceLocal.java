@@ -31,6 +31,7 @@ public interface TokenPersistenceLocal {
     List<Token> findRange(int[] range);
 
     int count();
+    Token findTokenByNro(String tokenNro);
     
     
 }

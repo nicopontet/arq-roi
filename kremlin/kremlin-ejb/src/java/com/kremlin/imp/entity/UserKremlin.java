@@ -24,7 +24,7 @@ public class UserKremlin implements Serializable {
    String username;
    String password;
    @OneToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-   @JoinColumn(name="application_id")    
+  // @JoinColumn(name="application_id")    
    Application application;
    boolean userExternal;
 

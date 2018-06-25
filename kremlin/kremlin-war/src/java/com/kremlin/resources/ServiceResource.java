@@ -7,12 +7,14 @@ package com.kremlin.resources;
 
 
 import com.google.gson.Gson;
+import com.kremlin.auth.imp.AccessBy;
+import com.kremlin.auth.imp.TypeAccess;
 
 import com.kremlin.dto.ServiceOperationDTO;
+import com.kremlin.auth.resource.filter.Secured;
 import com.kremlin.imp.entity.ServiceOperation;
 import com.kremlin.impl.CallServiceOperationException;
 import com.kremlin.impl.InvalidNameServiceOperationException;
-import com.kremlin.typecommunication.impl.JMSImplementation;
 import com.kremlin.impl.ServiceBeanLocal;
 import java.lang.reflect.Type;
 
@@ -39,6 +41,7 @@ import org.modelmapper.TypeToken;
  *
  * @author NICO_CUARTO
  */
+//@Secured({TypeAccess.INTERNAL})
 @Path("services")
 public class ServiceResource {
    
@@ -54,9 +57,9 @@ public class ServiceResource {
         
         
     }
-    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Secured(typeAccess=TypeAccess.INTERNAL)
     public Response registerService(String jsonServices) {
          
        //si el usuario es externo para fuera. No autorizado
@@ -78,6 +81,7 @@ public class ServiceResource {
     }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Secured(typeAccess=TypeAccess.EXTERNAL,accessBy=AccessBy.ANNOTATION)
     public Response getServices() {
         
         List<ServiceOperation> services = serviceBeanLocal.getServices();
@@ -99,6 +103,7 @@ public class ServiceResource {
     @POST
     @Path("/{operationName}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Secured(typeAccess=TypeAccess.EXTERNAL,accessBy=AccessBy.OPERATION_NAME)
     public Response callService(@PathParam("operationName") String operationName, String jsonBody) {
         
         try {

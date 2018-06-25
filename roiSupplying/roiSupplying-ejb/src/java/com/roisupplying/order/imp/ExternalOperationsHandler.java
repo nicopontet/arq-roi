@@ -7,13 +7,19 @@ import com.google.gson.JsonParser;
 import com.roisupplying.dto.ServiceOperationDTO;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class ExternalOperationsHandler {
+    
+    
+    
+    
     
     public static List<ServiceOperationDTO> getOperations(){
         Response response = callOperation("","get","");
@@ -44,6 +50,7 @@ public class ExternalOperationsHandler {
         Client client = ClientBuilder.newClient();
         Response response = client.target(uri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION,RegistrationBean.TOKEN)
                 .post(Entity.json(body));
         return response;
     }
@@ -52,6 +59,7 @@ public class ExternalOperationsHandler {
         Client client = ClientBuilder.newClient();
         Response response = client.target(uri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION,RegistrationBean.TOKEN)
                 .get();
         return response;
     }

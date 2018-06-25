@@ -2,6 +2,7 @@
 package com.roisupplying.order.imp;
 
 import com.google.gson.Gson;
+import com.roisupplying.dto.CredencialDTO;
 import com.roisupplying.dto.ServiceOperationDTO;
 import com.roisupplying.dto.ServiceOperationParamDTO;
 import com.roisupplying.dto.TypeDataDTO;
@@ -9,12 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -28,18 +31,34 @@ public class RegistrationBean {
     public static final String OPERATION_DELETE_ORDER = "DeleteOrder";
     private Gson gson;
     
+    public static String TOKEN;
+    
     @PostConstruct
     private void init() {
         gson = new Gson();
+        loginKremlin();
         registerCreateOrder();
         registerModifyOrder();
         registerDeleteOrder();
     }
+
+  
     
+    private void loginKremlin(){
+        Client client = ClientBuilder.newClient();
+        Response response = client.target("http://localhost:8080/kremlin-war/auth/login")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.json(gson.toJson(new CredencialDTO("supplying","supplying"))));
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
+            String tokenResponse=response.getHeaderString("TOKEN");
+            TOKEN = "Bearer "+tokenResponse;
+        }
+    }
     private void registerOperation(ServiceOperationDTO serviceOperation){
         Client client = ClientBuilder.newClient();
         Response response = client.target("http://localhost:8080/kremlin-war/services")
                 .request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, TOKEN)
                 .post(Entity.json(gson.toJson(serviceOperation)));
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
             
@@ -67,6 +86,7 @@ public class RegistrationBean {
         parameters.add(new ServiceOperationParamDTO("closingBillingDate", "int", 6));
         serviceOperation.setServiceParams(parameters);
         serviceOperation.setTypesData(new ArrayList<TypeDataDTO>());
+        serviceOperation.setAccessExternal(true);
         registerOperation(serviceOperation);
     }
     
@@ -93,6 +113,7 @@ public class RegistrationBean {
         parameters.add(new ServiceOperationParamDTO("closingBillingDate", "int", 6));
         serviceOperation.setServiceParams(parameters);
         serviceOperation.setTypesData(new ArrayList<TypeDataDTO>());
+        serviceOperation.setAccessExternal(true);
         registerOperation(serviceOperation);
     }
     
@@ -109,6 +130,8 @@ public class RegistrationBean {
         parameters.add(new ServiceOperationParamDTO("orderId", "int", 1));
         serviceOperation.setServiceParams(parameters);
         serviceOperation.setTypesData(new ArrayList<TypeDataDTO>());
+        serviceOperation.setAccessExternal(true);
         registerOperation(serviceOperation);
     }
+   
 }

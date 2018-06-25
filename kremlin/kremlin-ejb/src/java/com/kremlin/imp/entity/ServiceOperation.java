@@ -48,6 +48,8 @@ public class ServiceOperation implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy="serviceOperation")
     List<TypeData> typesData;
+    
+    boolean accessExternal;
 
     public Application getApplication() {
         return application;
@@ -82,7 +84,16 @@ public class ServiceOperation implements Serializable {
         this.typeCommunication = typeCommunication;
         this.resources = resource;
         this.additionalData=additionalData;
+        this.accessExternal=false;
              
+    }
+
+    public boolean isAccessExternal() {
+        return accessExternal;
+    }
+
+    public void setAccessExternal(boolean accessExternal) {
+        this.accessExternal = accessExternal;
     }
 
     public int getId() {

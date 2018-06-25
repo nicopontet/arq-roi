@@ -27,12 +27,7 @@ import org.modelmapper.ModelMapper;
 
 
 
-
-/**
- *
- * @author NICO_CUARTO
- */
-@Path("auth")
+@Path("/auth")
 public class LoginResource {
    
     @EJB
@@ -45,19 +40,28 @@ public class LoginResource {
         this.gson = new Gson();
         this.modelMapper=new ModelMapper();    
     }
-    
-    
+
     @POST
-    @Path("login")
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(String jsonBody) {
         UserDTO user=gson.fromJson(jsonBody, UserDTO.class);
         try {
-            Token token=authBeanLocal.login(user.getUsername(), user.getPassword());
+            
+            //si es una aplicacion externa
+            Token token=authBeanLocal.authentication(user.getUsername(), user.getPassword());
+           
             return Response
                 .status(Response.Status.OK)
-                .entity(token.getToken())
+                .header("TOKEN", token.getToken())
                 .build();
+            
+            //si es aplicacion interna
+           /*  return Response
+                .status(Response.Status.OK)
+                .header("TOKEN",  RegistrationBean.Token)
+                .build();*/
+           
         } catch (LoginUnsusefullException ex) {
             Logger.getLogger(LoginResource.class.getName()).log(Level.INFO, null, ex);
              return Response

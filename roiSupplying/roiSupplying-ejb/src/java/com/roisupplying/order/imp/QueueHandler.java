@@ -6,6 +6,7 @@ import com.roisupplying.dto.OrderSupplyingDTO;
 import com.roisupplying.dto.PlanDTO;
 import com.roisupplying.order.entity.OrderSupplying;
 import com.roisupplying.order.persistence.OrderPersistenceLocal;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.ActivationConfigProperty;
@@ -36,9 +37,10 @@ public class QueueHandler implements MessageListener {
         try {
             TextMessage txt = (TextMessage) message;
             OrderSupplyingDTO newOrderDTO = gson.fromJson(txt.getText(), OrderSupplyingDTO.class);
+           
             switch (newOrderDTO.getOrderAction()){
                 case RegistrationBean.OPERATION_CREATE_ORDER:
-                    orderPersistenceLocal.create(newOrderDTO);
+                    orderPersistenceLocal.create(new OrderSupplying(newOrderDTO.getClientId(), newOrderDTO.getStartDate(), newOrderDTO.getHiredVolume(), newOrderDTO.getServiceStationNumber(),newOrderDTO.getClosingBillingDate()));
                     //call to create plan
                     PlanDTO plan = new PlanDTO(newOrderDTO.getOrderId());
                     ExternalOperationsHandler.callOperation("CreatePlan", "POST", gson.toJson(plan));

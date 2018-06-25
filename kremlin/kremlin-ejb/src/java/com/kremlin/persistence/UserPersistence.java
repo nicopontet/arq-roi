@@ -2,6 +2,7 @@
 package com.kremlin.persistence;
 
 
+import com.kremlin.imp.entity.Application;
 import com.kremlin.imp.entity.ServiceOperation;
 import com.kremlin.imp.entity.UserKremlin;
 import java.util.List;
@@ -12,6 +13,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -38,6 +41,8 @@ public class UserPersistence extends AbstractPersistence<UserKremlin> implements
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery q = cb.createQuery();
             Root<UserKremlin> root = q.from(UserKremlin.class);
+            Join<UserKremlin,Application> p;
+            p = root.join("application", JoinType.INNER);
             Predicate prEq = cb.equal(root.get("username"), name);
             q.select(root).where(prEq);
             TypedQuery<UserKremlin> typedQuery = em.createQuery(q);

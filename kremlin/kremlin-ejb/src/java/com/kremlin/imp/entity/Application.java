@@ -27,10 +27,11 @@ public class Application implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     String name;
-    @OneToOne(fetch=FetchType.LAZY, mappedBy="application")
+    
+    @OneToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="application")
     UserKremlin owner;
    // int UserId
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="application")
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="application")
     List<ServiceOperation> servicesoperations;
 
     public Application() {

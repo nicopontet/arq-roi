@@ -24,6 +24,7 @@ public class ServiceBean implements ServiceBeanLocal {
     
     public ServiceBean(){}
     
+   
     @Override
     public void registerService(ServiceOperation operation) throws InvalidNameServiceOperationException {
        boolean existService= existServiceOperationName(operation.getName());
@@ -44,6 +45,10 @@ public class ServiceBean implements ServiceBeanLocal {
     private boolean existServiceOperationName(String name){
         ServiceOperation service=servicePersistenceLocal.findServiceOperationByName(name);
         return service!=null;
+    }
+    @Override
+    public ServiceOperation getServiceOperationByName(String name){
+        return servicePersistenceLocal.findServiceOperationByName(name);  
     }
     
     @Override
