@@ -27,4 +27,54 @@ public class OrderSupplying implements Serializable  {
         this.serviceStationNumber = serviceStationNumber;
         this.closingBillingDate = closingBillingDate;
     }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getHiredVolume() {
+        return hiredVolume;
+    }
+
+    public void setHiredVolume(int hiredVolume) {
+        this.hiredVolume = hiredVolume;
+    }
+
+    public int getServiceStationNumber() {
+        return serviceStationNumber;
+    }
+
+    public void setServiceStationNumber(int serviceStationNumber) {
+        this.serviceStationNumber = serviceStationNumber;
+    }
+
+    public int getClosingBillingDate() {
+        return closingBillingDate;
+    }
+
+    public void setClosingBillingDate(int closingBillingDate) {
+        this.closingBillingDate = closingBillingDate;
+    }
+    
+    
 }
