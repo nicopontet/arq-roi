@@ -25,14 +25,54 @@ import javax.persistence.OneToOne;
 public class Application implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-      
     int id;
     String name;
-    
     @OneToOne(fetch=FetchType.LAZY, mappedBy="application")
     UserKremlin owner;
    // int UserId
     @OneToMany(cascade = CascadeType.ALL, mappedBy="application")
     List<ServiceOperation> servicesoperations;
+
+    public Application() {
+    }
+
+    public Application(String name) {
+        this.name = name;
+        this.owner=null;
+        this.servicesoperations=null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UserKremlin getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserKremlin owner) {
+        this.owner = owner;
+    }
+
+    public List<ServiceOperation> getServicesoperations() {
+        return servicesoperations;
+    }
+
+    public void setServicesoperations(List<ServiceOperation> servicesoperations) {
+        this.servicesoperations = servicesoperations;
+    }
+    
     
 }

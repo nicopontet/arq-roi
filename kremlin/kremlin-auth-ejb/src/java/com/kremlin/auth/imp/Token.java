@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kremlin.imp.entity;
+package com.kremlin.auth.imp;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,13 +27,16 @@ public class Token implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int token;
     String userName;
-    Date date; 
+    String date; 
 
     public Token() {
     }
 
     public Token(String user) {
         this.userName = user;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        this.date=dateFormat.format(date);
     }
 
     public int getToken() {
@@ -49,15 +55,14 @@ public class Token implements Serializable {
         this.userName = userName;
     }
 
-
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
+    
     
 
     

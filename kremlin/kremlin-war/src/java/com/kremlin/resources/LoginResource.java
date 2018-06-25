@@ -7,26 +7,23 @@ package com.kremlin.resources;
 
 
 import com.google.gson.Gson;
+import com.kremlin.auth.imp.AuthBean;
+import com.kremlin.auth.imp.AuthBeanLocal;
+import com.kremlin.auth.imp.AuthException;
+import com.kremlin.auth.imp.LoginUnsusefullException;
+import com.kremlin.auth.imp.Token;
 
-import com.kremlin.dto.ServiceOperationDTO;
-import com.kremlin.imp.entity.ServiceOperation;
-import com.kremlin.typecommunication.impl.JMSImplementation;
-import com.kremlin.impl.ServiceBeanLocal;
-import java.lang.reflect.Type;
-
-import java.util.List;
+import com.kremlin.dto.UserDTO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 
 
 
@@ -35,33 +32,46 @@ import org.modelmapper.TypeToken;
  *
  * @author NICO_CUARTO
  */
-@Path("services")
+@Path("auth")
 public class LoginResource {
    
     @EJB
-    private ServiceBeanLocal serviceBeanLocal;
+    private AuthBeanLocal authBeanLocal;
     
     private final Gson gson;
     private final ModelMapper modelMapper;
-    
+
     public LoginResource() {
         this.gson = new Gson();
-        this.modelMapper=new ModelMapper();
-        
-        
+        this.modelMapper=new ModelMapper();    
     }
     
     
     @POST
-    @Path("/login")
+    @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response callService(String jsonBody) {
-        
-        JMSImplementation jmsImp = new JMSImplementation("jms/RoiSupplyingConnectionFactory","jms/RoiSupplyingQueue");
-        jmsImp.sendMessage(jsonBody);
-        
-        return Response
+    public Response login(String jsonBody) {
+        UserDTO user=gson.fromJson(jsonBody, UserDTO.class);
+        try {
+            Token token=authBeanLocal.login(user.getUsername(), user.getPassword());
+            return Response
                 .status(Response.Status.OK)
+                .entity(token.getToken())
                 .build();
+        } catch (LoginUnsusefullException ex) {
+            Logger.getLogger(LoginResource.class.getName()).log(Level.INFO, null, ex);
+             return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity(ex.getMessage())
+                .build();
+        } catch (AuthException ex) {
+            Logger.getLogger(LoginResource.class.getName()).log(Level.SEVERE, null, ex);
+             return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity(ex.getMessage())
+                .build();
+        } 
+     
+       
     }
 }
