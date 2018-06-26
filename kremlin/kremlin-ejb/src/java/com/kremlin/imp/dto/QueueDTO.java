@@ -1,5 +1,5 @@
 
-package com.kremlin.dto;
+package com.kremlin.imp.dto;
 
 import com.google.gson.Gson;
 

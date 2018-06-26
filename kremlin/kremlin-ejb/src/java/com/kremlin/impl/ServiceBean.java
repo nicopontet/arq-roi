@@ -1,6 +1,7 @@
 
 package com.kremlin.impl;
 
+import com.kremlin.imp.dto.QueueDTO;
 import com.kremlin.imp.entity.ServiceOperation;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -12,6 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.core.Response;
 
 @Stateless
 public class ServiceBean implements ServiceBeanLocal {
@@ -52,17 +54,20 @@ public class ServiceBean implements ServiceBeanLocal {
     }
     
     @Override
-    public void sendData(String serviceOperationName,  String data) throws CallServiceOperationException{
-       ServiceOperation service=servicePersistenceLocal.findServiceOperationByName(serviceOperationName);
+    public Response sendData(String serviceOperationName,String token,String jsonBody) throws CallServiceOperationException{
+       ServiceOperation service = servicePersistenceLocal.findServiceOperationByName(serviceOperationName);
+       Response response = null;
        if (service!=null){ 
         TypeCommunicationEnum typeCom = service.getTypeCommunication();
         switch (typeCom){
             case REST:
                 String operationUrl = service.getResources();
                 String method = service.getAdditionalData();
-                RESTImplementation.callOperation(operationUrl,method,data);
+                response = RESTImplementation.callOperation(service,jsonBody);
                 break;
             case JMS:
+                QueueDTO sendQueueDTO = new QueueDTO(token,jsonBody,serviceOperationName);
+                String data = sendQueueDTO.toJson();
                 String connectionFactory=service.getResources();
                 String queue= service.getAdditionalData();
                 JMSImplementation jmsImp = new JMSImplementation(connectionFactory,queue);
@@ -87,6 +92,7 @@ public class ServiceBean implements ServiceBeanLocal {
        }else{
            throw new CallServiceOperationException("Not found serivice operation");
        }
+       return response;
     }
 
 

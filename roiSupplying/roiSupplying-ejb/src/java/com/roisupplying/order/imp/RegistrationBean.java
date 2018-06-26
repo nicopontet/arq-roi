@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -29,6 +30,7 @@ public class RegistrationBean {
     public static final String OPERATION_CREATE_ORDER = "CreateOrder";
     public static final String OPERATION_MODIFY_ORDER = "ModifyOrder";
     public static final String OPERATION_DELETE_ORDER = "DeleteOrder";
+    public static final String OPERATION_QUERY_ORDER = "QueryOrder";
     private Gson gson;
     
     public static String TOKEN_KREMLIN;
@@ -41,6 +43,7 @@ public class RegistrationBean {
         registerCreateOrder();
         registerModifyOrder();
         registerDeleteOrder();
+        registerQueryOrder();
     }
 
   
@@ -75,7 +78,6 @@ public class RegistrationBean {
         serviceOperation.setResources("jms/RoiSupplyingConnectionFactory");
         serviceOperation.setAdditionalData("jms/RoiSupplyingQueue");
         List<ServiceOperationParamDTO> parameters = new ArrayList<ServiceOperationParamDTO>();
-        parameters.add(new ServiceOperationParamDTO("orderAction", "String", 1));
         //int clientId;
         parameters.add(new ServiceOperationParamDTO("clientId", "int", 2));
         //Date startDate;
@@ -100,7 +102,6 @@ public class RegistrationBean {
         serviceOperation.setResources("jms/RoiSupplyingConnectionFactory");
         serviceOperation.setAdditionalData("jms/RoiSupplyingQueue");
         List<ServiceOperationParamDTO> parameters = new ArrayList<ServiceOperationParamDTO>();
-        parameters.add(new ServiceOperationParamDTO("orderAction", "String", 1));
         //int orderId
         parameters.add(new ServiceOperationParamDTO("orderId", "int", 1));
         //int clientId;
@@ -127,7 +128,6 @@ public class RegistrationBean {
         serviceOperation.setResources("jms/RoiSupplyingConnectionFactory");
         serviceOperation.setAdditionalData("jms/RoiSupplyingQueue");
         List<ServiceOperationParamDTO> parameters = new ArrayList<ServiceOperationParamDTO>();
-        parameters.add(new ServiceOperationParamDTO("orderAction", "String", 1));
         //int orderId
         parameters.add(new ServiceOperationParamDTO("orderId", "int", 1));
         serviceOperation.setServiceParams(parameters);
@@ -136,4 +136,19 @@ public class RegistrationBean {
         registerOperation(serviceOperation);
     }
    
+    public void registerQueryOrder(){
+        ServiceOperationDTO serviceOperation = new ServiceOperationDTO();
+        serviceOperation.setName(OPERATION_QUERY_ORDER);
+        serviceOperation.setTypeReturn("Order");
+        serviceOperation.setTypeCommunication("REST");
+        serviceOperation.setResources("http://localhost:8080/roiSupplying-war/orders" + "/{orderId}");
+        serviceOperation.setAdditionalData(HttpMethod.GET);
+        List<ServiceOperationParamDTO> parameters = new ArrayList<ServiceOperationParamDTO>();
+        //int orderId
+        parameters.add(new ServiceOperationParamDTO("orderId", "int", 1));
+        serviceOperation.setServiceParams(parameters);
+        serviceOperation.setTypesData(new ArrayList<TypeDataDTO>());
+        serviceOperation.setAccessExternal(true);
+        registerOperation(serviceOperation);
+    }
 }

@@ -8,6 +8,7 @@ package com.kremlin.impl;
 import com.kremlin.imp.entity.ServiceOperation;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -17,6 +18,6 @@ import javax.ejb.Local;
 public interface ServiceBeanLocal {
     void registerService(ServiceOperation service) throws InvalidNameServiceOperationException;
     List<ServiceOperation> getServices();
-    void sendData(String serviceOperationName,String data) throws CallServiceOperationException;
+    Response sendData(String serviceOperationName,String token,String jsonBody) throws CallServiceOperationException;
     public ServiceOperation getServiceOperationByName(String name);
 }

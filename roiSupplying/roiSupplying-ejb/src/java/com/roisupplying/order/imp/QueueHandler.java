@@ -38,36 +38,33 @@ public class QueueHandler implements MessageListener {
         try {
             TextMessage txt = (TextMessage) message;
             QueueDTO newQueueDTO = gson.fromJson(txt.getText(), QueueDTO.class);
-            OrderSupplyingDTO newOrderDTO = gson.fromJson(newQueueDTO.getData(),OrderSupplyingDTO.class);
+            OrderSupplying newOrder = gson.fromJson(newQueueDTO.getData(),OrderSupplying.class);
             if (RegistrationBean.TOKEN_KREMLIN.equals(newQueueDTO.getToken())) {
-                 switch (newOrderDTO.getOrderAction()){
-                case RegistrationBean.OPERATION_CREATE_ORDER:
-                    orderPersistenceLocal.create(new OrderSupplying(newOrderDTO.getClientId(), newOrderDTO.getStartDate(), newOrderDTO.getHiredVolume(), newOrderDTO.getServiceStationNumber(),newOrderDTO.getClosingBillingDate()));
-                    //call to create plan
-                    PlanDTO plan = new PlanDTO(newOrderDTO.getOrderId());
-                    ExternalOperationsHandler.callOperation("CreatePlan", "POST", gson.toJson(plan));
-                    break;
-                case RegistrationBean.OPERATION_MODIFY_ORDER:
-                    OrderSupplying baseOrder = orderPersistenceLocal.find(newOrderDTO.getOrderId());
-                    if(baseOrder!=null && !baseOrder.isCancelled()){
-                        baseOrder = OrderLogic.updateOrder(baseOrder, newOrderDTO);
-                        orderPersistenceLocal.edit(baseOrder);
-                    }
-                    break;
-                case RegistrationBean.OPERATION_DELETE_ORDER:
-                    OrderSupplying baseOrderDelete = orderPersistenceLocal.find(newOrderDTO.getOrderId());
-                    if(baseOrderDelete!=null){
-                        baseOrderDelete.setCancelled(true);
-                        orderPersistenceLocal.edit(baseOrderDelete);
-                    }
-                    break;
-                default:
-                    break;
+                switch (newQueueDTO.getAction()){
+                    case RegistrationBean.OPERATION_CREATE_ORDER:
+                        orderPersistenceLocal.create(newOrder);
+                        //call to create plan
+                        PlanDTO plan = new PlanDTO(newOrder.getOrderId());
+                        ExternalOperationsHandler.callOperation("CreatePlan", "POST", gson.toJson(plan));
+                        break;
+                    case RegistrationBean.OPERATION_MODIFY_ORDER:
+                        OrderSupplying baseOrder = orderPersistenceLocal.find(newOrder.getOrderId());
+                        if(baseOrder!=null && !baseOrder.isCancelled()){
+                            baseOrder = OrderLogic.updateOrder(baseOrder, newOrder);
+                            orderPersistenceLocal.edit(baseOrder);
+                        }
+                        break;
+                    case RegistrationBean.OPERATION_DELETE_ORDER:
+                        OrderSupplying baseOrderDelete = orderPersistenceLocal.find(newOrder.getOrderId());
+                        if(baseOrderDelete!=null){
+                            baseOrderDelete.setCancelled(true);
+                            orderPersistenceLocal.edit(baseOrderDelete);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
-            }
- 
-           
-            
         } catch (JMSException ex) {
             Logger.getLogger(QueueHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

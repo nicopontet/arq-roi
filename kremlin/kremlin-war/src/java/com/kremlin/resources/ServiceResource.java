@@ -109,13 +109,11 @@ public class ServiceResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Secured(typeAccess=TypeAccess.EXTERNAL,accessBy=AccessBy.OPERATION_NAME)
     public Response callService(@PathParam("operationName") String operationName, String jsonBody) {
-        
         try { 
-            QueueDTO sendQueueDTO=new QueueDTO(InitializationBean.TOKEN,jsonBody);
-            serviceBeanLocal.sendData(operationName, sendQueueDTO.toJson());
-              return Response
-                .status(Response.Status.OK)
-                .build();
+            //QueueDTO sendQueueDTO = new QueueDTO(,jsonBody,operationName);
+            //serviceBeanLocal.sendData(operationName, sendQueueDTO.toJson());
+            Response response = serviceBeanLocal.sendData(operationName, InitializationBean.TOKEN, jsonBody);
+            return response;
         } catch (CallServiceOperationException ex) {
             Logger.getLogger(ServiceResource.class.getName()).log(Level.SEVERE, null, ex);
             return Response

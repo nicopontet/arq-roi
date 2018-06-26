@@ -1,8 +1,7 @@
-package com.kremlin.resources;
+package com.roisupplying.resources;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
-import com.kremlin.auth.resource.filter.AuthorizeFilter;
 
 @javax.ws.rs.ApplicationPath("")
 public class ApplicationConfig extends Application {
@@ -15,10 +14,7 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.kremlin.auth.resource.filter.AuthenticateFilter.class);
-        resources.add(com.kremlin.auth.resource.filter.AuthorizeFilter.class);
-        resources.add(com.kremlin.resources.LoginResource.class);
-        resources.add(com.kremlin.resources.ServiceResource.class);
+        resources.add(com.roisupplying.resources.OrderResource.class);
     }
     
 }

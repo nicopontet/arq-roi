@@ -1,24 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.roisupplying.dto;
 
-/**
- *
- * @author NICO_CUARTO
- */
 public class QueueDTO {
     String token;
+    String action;
     String data;
 
     public QueueDTO() {
     }
 
-    public QueueDTO(String token, String object) {
+    public QueueDTO(String token, String object,String action) {
         this.token = token;
+        this.action = action;
         this.data = object;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public String getToken() {
