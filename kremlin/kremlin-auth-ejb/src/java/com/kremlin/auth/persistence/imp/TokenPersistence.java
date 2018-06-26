@@ -52,6 +52,20 @@ public class TokenPersistence extends AbstractPersistence<Token> implements Toke
             return null;
         }
     } 
+    @Override
+    public Token findTokenByUser(String userName) {
+        try{
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery q = cb.createQuery();
+            Root<Token> root = q.from(Token.class);
+            Predicate prEq = cb.equal(root.get("userName"), userName);
+            q.select(root).where(prEq);
+            TypedQuery<Token> typedQuery = em.createQuery(q);
+            return typedQuery.getSingleResult();
+        }catch(NoResultException ex){
+            return null;
+        }
+    } 
 
     
 }

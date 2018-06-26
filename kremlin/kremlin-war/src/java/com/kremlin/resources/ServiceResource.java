@@ -7,11 +7,14 @@ package com.kremlin.resources;
 
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.kremlin.auth.imp.AccessBy;
 import com.kremlin.auth.imp.TypeAccess;
 
 import com.kremlin.dto.ServiceOperationDTO;
 import com.kremlin.auth.resource.filter.Secured;
+import com.kremlin.impl.InitializationBean;
+import com.kremlin.dto.QueueDTO;
 import com.kremlin.imp.entity.ServiceOperation;
 import com.kremlin.impl.CallServiceOperationException;
 import com.kremlin.impl.InvalidNameServiceOperationException;
@@ -47,6 +50,7 @@ public class ServiceResource {
    
     @EJB
     private ServiceBeanLocal serviceBeanLocal;
+   
     
     private final Gson gson;
     private final ModelMapper modelMapper;
@@ -56,6 +60,7 @@ public class ServiceResource {
         this.modelMapper=new ModelMapper();
         
         
+        
     }
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -63,7 +68,6 @@ public class ServiceResource {
     public Response registerService(String jsonServices) {
          
        //si el usuario es externo para fuera. No autorizado
-    
         ServiceOperation op=gson.fromJson(jsonServices, ServiceOperation.class);
         try {
             serviceBeanLocal.registerService(op);
@@ -106,8 +110,9 @@ public class ServiceResource {
     @Secured(typeAccess=TypeAccess.EXTERNAL,accessBy=AccessBy.OPERATION_NAME)
     public Response callService(@PathParam("operationName") String operationName, String jsonBody) {
         
-        try {
-            serviceBeanLocal.sendData(operationName, jsonBody);
+        try { 
+            QueueDTO sendQueueDTO=new QueueDTO(InitializationBean.TOKEN,jsonBody);
+            serviceBeanLocal.sendData(operationName, sendQueueDTO.toJson());
               return Response
                 .status(Response.Status.OK)
                 .build();

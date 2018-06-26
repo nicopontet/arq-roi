@@ -27,6 +27,7 @@ public class Token implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     String token;
+    String tokenKremin;
     String userName;
     String date; 
 
@@ -39,6 +40,21 @@ public class Token implements Serializable {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         this.date=dateFormat.format(date);
+        
+    }
+
+    public String getTokenKremin() {
+        return tokenKremin;
+    }
+
+    public void setTokenKremin(String tokenKremin) {
+        this.tokenKremin = tokenKremin;
+    }
+
+    public Token(String token, String tokenKremin, String userName) {
+        this.token = token;
+        this.tokenKremin = tokenKremin;
+        this.userName = userName;
     }
 
     public String getToken() {

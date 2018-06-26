@@ -32,6 +32,7 @@ public interface TokenPersistenceLocal {
 
     int count();
     Token findTokenByNro(String tokenNro);
+    Token findTokenByUser(String userName);
     
     
 }

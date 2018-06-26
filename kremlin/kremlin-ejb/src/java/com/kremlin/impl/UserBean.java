@@ -6,18 +6,15 @@
 package com.kremlin.impl;
 
 import com.kremlin.imp.entity.UserKremlin;
-import com.kremlin.persistence.ServicePersistenceLocal;
 import com.kremlin.persistence.UserPersistenceLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.xml.registry.infomodel.User;
 
-/**
- *
- * @author NICO_CUARTO
- */
+
+
 @Stateless
 public class UserBean implements UserBeanLocal {
+    
     @EJB
     private UserPersistenceLocal userPersistenceLocal;
     

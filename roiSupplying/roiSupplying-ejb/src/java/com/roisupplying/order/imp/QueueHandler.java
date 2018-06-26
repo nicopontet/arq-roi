@@ -4,6 +4,7 @@ package com.roisupplying.order.imp;
 import com.google.gson.Gson;
 import com.roisupplying.dto.OrderSupplyingDTO;
 import com.roisupplying.dto.PlanDTO;
+import com.roisupplying.dto.QueueDTO;
 import com.roisupplying.order.entity.OrderSupplying;
 import com.roisupplying.order.persistence.OrderPersistenceLocal;
 import java.util.Date;
@@ -36,9 +37,10 @@ public class QueueHandler implements MessageListener {
     public void onMessage(Message message) {
         try {
             TextMessage txt = (TextMessage) message;
-            OrderSupplyingDTO newOrderDTO = gson.fromJson(txt.getText(), OrderSupplyingDTO.class);
-           
-            switch (newOrderDTO.getOrderAction()){
+            QueueDTO newQueueDTO = gson.fromJson(txt.getText(), QueueDTO.class);
+            OrderSupplyingDTO newOrderDTO = gson.fromJson(newQueueDTO.getData(),OrderSupplyingDTO.class);
+            if (RegistrationBean.TOKEN_KREMLIN.equals(newQueueDTO.getToken())) {
+                 switch (newOrderDTO.getOrderAction()){
                 case RegistrationBean.OPERATION_CREATE_ORDER:
                     orderPersistenceLocal.create(new OrderSupplying(newOrderDTO.getClientId(), newOrderDTO.getStartDate(), newOrderDTO.getHiredVolume(), newOrderDTO.getServiceStationNumber(),newOrderDTO.getClosingBillingDate()));
                     //call to create plan
@@ -62,6 +64,9 @@ public class QueueHandler implements MessageListener {
                 default:
                     break;
             }
+            }
+ 
+           
             
         } catch (JMSException ex) {
             Logger.getLogger(QueueHandler.class.getName()).log(Level.SEVERE, null, ex);

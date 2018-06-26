@@ -2,6 +2,7 @@ package com.kremlin.resources;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
+import com.kremlin.auth.resource.filter.AuthorizeFilter;
 
 @javax.ws.rs.ApplicationPath("")
 public class ApplicationConfig extends Application {

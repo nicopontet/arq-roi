@@ -31,6 +31,7 @@ public class RegistrationBean {
     public static final String OPERATION_DELETE_ORDER = "DeleteOrder";
     private Gson gson;
     
+    public static String TOKEN_KREMLIN;
     public static String TOKEN;
     
     @PostConstruct
@@ -51,7 +52,9 @@ public class RegistrationBean {
                 .post(Entity.json(gson.toJson(new CredencialDTO("supplying","supplying"))));
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
             String tokenResponse=response.getHeaderString("TOKEN");
+            String tokenResponseKremlin=response.getHeaderString("TOKEN_KREMLIN");
             TOKEN = "Bearer "+tokenResponse;
+            TOKEN_KREMLIN = tokenResponseKremlin;
         }
     }
     private void registerOperation(ServiceOperationDTO serviceOperation){
@@ -60,8 +63,7 @@ public class RegistrationBean {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .header(HttpHeaders.AUTHORIZATION, TOKEN)
                 .post(Entity.json(gson.toJson(serviceOperation)));
-        if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-            
+        if (response.getStatus() == Response.Status.OK.getStatusCode()) {     
         }
     }
     

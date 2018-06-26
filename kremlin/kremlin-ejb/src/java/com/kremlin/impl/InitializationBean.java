@@ -23,12 +23,13 @@ public class InitializationBean {
     UserBeanLocal userBeanLocal;
     
     
+    public static String TOKEN;
     
     @PostConstruct
     private void init() {
         registerUser();
     }
-
+    
     private void registerUser() {
         
         UserKremlin kremlin =new UserKremlin("kremlin","kremlin",true);
@@ -60,12 +61,10 @@ public class InitializationBean {
         calcApp.setOwner(calc);
         calc.setApplication(calcApp);
         userBeanLocal.createUser(calc);
-        
-       /* UserKremlin calc =new UserKremlin("calc","calc",false);
-        Application calcApp= new Application("calcApp");
-        calcApp.setOwner(calc);
-        calc.setApplication(calcApp);
-        userBeanLocal.createUser(calc);*/
-        
+         /* UserKremlin calc =new UserKremlin("calc","calc",false);
+            Application calcApp= new Application("calcApp");
+            calcApp.setOwner(calc);
+            calc.setApplication(calcApp);
+            userBeanLocal.createUser(calc);*/   
     }
 }

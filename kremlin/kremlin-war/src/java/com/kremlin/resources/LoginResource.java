@@ -47,14 +47,17 @@ public class LoginResource {
     public Response login(String jsonBody) {
         UserDTO user=gson.fromJson(jsonBody, UserDTO.class);
         try {
-            
+            if (true) {
+                
+            }
             //si es una aplicacion externa
             Token token=authBeanLocal.authentication(user.getUsername(), user.getPassword());
            
             return Response
-                .status(Response.Status.OK)
-                .header("TOKEN", token.getToken())
-                .build();
+                    .status(Response.Status.OK)
+                    .header("TOKEN", token.getToken())
+                    .header("TOKEN_KREMLIN", token.getTokenKremin())
+                    .build();
             
             //si es aplicacion interna
            /*  return Response

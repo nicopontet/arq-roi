@@ -33,6 +33,7 @@ public class Application implements Serializable {
    // int UserId
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="application")
     List<ServiceOperation> servicesoperations;
+    boolean applicationExternal;
 
     public Application() {
     }
