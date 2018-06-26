@@ -1,12 +1,15 @@
 
 package com.roiplanner.dto;
 
+
 import java.util.List;
 
 public class TypeDataDTO {
-    String name;
-    ServiceOperationDTO serviceOperation;   
-    List<AttributeTypeDTO> attributesType;
+   String name;
+   ServiceOperationDTO serviceOperation;   
+   List<AttributeTypeDTO> attributesType;
+
+   
 
     public TypeDataDTO(){}
 

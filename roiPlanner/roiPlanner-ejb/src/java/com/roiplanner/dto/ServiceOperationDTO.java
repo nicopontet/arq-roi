@@ -11,6 +11,15 @@ public class ServiceOperationDTO {
     String resources;
     String additionalData;
     List<TypeDataDTO> typesData;
+    boolean accessExternal;
+
+    public boolean isAccessExternal() {
+        return accessExternal;
+    }
+
+    public void setAccessExternal(boolean accessExternal) {
+        this.accessExternal = accessExternal;
+    }
 
     public List<ServiceOperationParamDTO> getServiceParams() {
         return serviceParams;

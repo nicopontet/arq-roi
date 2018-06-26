@@ -6,11 +6,11 @@ import com.roisupplying.dto.CredencialDTO;
 import com.roisupplying.dto.ServiceOperationDTO;
 import com.roisupplying.dto.ServiceOperationParamDTO;
 import com.roisupplying.dto.TypeDataDTO;
+
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -50,19 +50,19 @@ public class RegistrationBean {
     
     private void loginKremlin(){
         Client client = ClientBuilder.newClient();
-        Response response = client.target("http://localhost:8080/kremlin-war/auth/login")
+        Response response = client.target(Constant.URL_LOGIN)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.json(gson.toJson(new CredencialDTO("supplying","supplying"))));
         if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-            String tokenResponse=response.getHeaderString("TOKEN");
-            String tokenResponseKremlin=response.getHeaderString("TOKEN_KREMLIN");
+            String tokenResponse=response.getHeaderString(Constant.TOKEN);
+            String tokenResponseKremlin=response.getHeaderString(Constant.TOKEN_KREMLIN);
             TOKEN = "Bearer "+tokenResponse;
             TOKEN_KREMLIN = tokenResponseKremlin;
         }
     }
     private void registerOperation(ServiceOperationDTO serviceOperation){
         Client client = ClientBuilder.newClient();
-        Response response = client.target("http://localhost:8080/kremlin-war/services")
+        Response response = client.target(Constant.URL_REGISTER_SERVICE_OPERATION)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .header(HttpHeaders.AUTHORIZATION, TOKEN)
                 .post(Entity.json(gson.toJson(serviceOperation)));

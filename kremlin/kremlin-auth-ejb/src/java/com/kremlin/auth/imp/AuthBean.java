@@ -35,16 +35,25 @@ public class AuthBean implements AuthBeanLocal {
       try{
         UserKremlin user= userBeanLocal.getUserByName(name);
         if (user!=null && user.getPassword().equals(pass) &&  user.getUsername().equals(name)) {
-           
-                Random random = new SecureRandom();
-                String tokenNro = new BigInteger(130, random).toString(32);
-                Token token=new Token(tokenNro,name);
-                if (!user.isUserExternal()) {
-                    Token tokenKremlin=getTokenByUser("kremlin");
-                    token.setTokenKremin(tokenKremlin.getToken());
+                Token existToken=getTokenByUser(user.getUsername());
+                if (existToken==null) {
+                    Random random = new SecureRandom();
+                    String tokenNro = new BigInteger(130, random).toString(32);
+                    Token token=new Token(tokenNro,name);
+                    if (!user.isUserExternal()) {
+                        Token tokenKremlin=getTokenByUser("kremlin");
+                        token.setTokenKremin(tokenKremlin.getToken());
+                    }
+                    token=tokenPersistenceLocal.createToken(token);     
+                    return token;    
+                }else{
+                    if (!user.isUserExternal()) {
+                        Token tokenKremlin=getTokenByUser("kremlin");
+                        existToken.setTokenKremin(tokenKremlin.getToken());
+                    }
+                    return existToken;    
                 }
-                token=tokenPersistenceLocal.createToken(token);     
-                return token;     
+                     
         }else{
             throw new LoginUnsusefullException("Username or password incorrect");
         }  

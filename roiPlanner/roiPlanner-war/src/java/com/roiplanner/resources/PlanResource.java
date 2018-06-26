@@ -53,6 +53,7 @@ public class PlanResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPlan(String jsonPlan) {
+        
         Plan newPlan = gson.fromJson(jsonPlan, Plan.class);
         planBeanLocal.createPlan(newPlan);
         return Response

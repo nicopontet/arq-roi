@@ -1,6 +1,7 @@
 
 package com.roisupplying.dto;
 
+
 import java.util.List;
 
 public class TypeDataDTO {

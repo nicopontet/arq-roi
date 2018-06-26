@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.roisupplying.dto.ServiceOperationDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -36,7 +37,7 @@ public class ExternalOperationsHandler {
     
     public static Response callOperation(String operation,String method,String body){
         Response response = null;
-        String uri = "http://localhost:8080/kremlin-war/services";
+        String uri = Constant.URL_CALL_SERVICE;
         if(!operation.isEmpty()) uri += "/" + operation;
         if(method.toLowerCase().equals("get")){
             response = getOperation(uri);
