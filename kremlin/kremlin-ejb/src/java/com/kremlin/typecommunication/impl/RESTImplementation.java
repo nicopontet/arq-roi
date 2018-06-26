@@ -11,30 +11,32 @@ import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class RESTImplementation {
-    
-    public static Response callOperation(ServiceOperation service,String body){
+    private static final String AUTHENTICATION_SCHEME = "Bearer ";
+    public static Response callOperation(String token,ServiceOperation service,String body){
         Response response = null;
         if(service.getAdditionalData().toLowerCase().equals("get")){
-            response = getOperation(service,body);
+            response = getOperation(token,service,body);
         }else if(service.getAdditionalData().toLowerCase().equals("post")){
-            response = postOperation(service.getResources(),body);
+            response = postOperation(token,service.getResources(),body);
         }
         return response;
     }
     
-    public static Response postOperation(String uri,String body){
+    public static Response postOperation(String token,String uri,String body){
         Client client = ClientBuilder.newClient();
         Response response = client.target(uri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, AUTHENTICATION_SCHEME + token)
                 .post(Entity.json(body));
         return response;
     }
     
-    public static Response getOperation(ServiceOperation service,String body){
+    public static Response getOperation(String token,ServiceOperation service,String body){
         Gson gson = new Gson();
         Client client = ClientBuilder.newClient();
         String uri = service.getResources();
@@ -48,6 +50,7 @@ public class RESTImplementation {
         }
         Response response = client.target(uri)
                 .request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, AUTHENTICATION_SCHEME + token)
                 .get();
         return response;
     }

@@ -2,6 +2,7 @@
 package com.kremlin.impl;
 
 import com.kremlin.imp.dto.QueueDTO;
+
 import com.kremlin.imp.entity.ServiceOperation;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -61,9 +62,10 @@ public class ServiceBean implements ServiceBeanLocal {
         TypeCommunicationEnum typeCom = service.getTypeCommunication();
         switch (typeCom){
             case REST:
+             
                 String operationUrl = service.getResources();
                 String method = service.getAdditionalData();
-                response = RESTImplementation.callOperation(service,jsonBody);
+                response = RESTImplementation.callOperation(token,service,jsonBody);
                 break;
             case JMS:
                 QueueDTO sendQueueDTO = new QueueDTO(token,jsonBody,serviceOperationName);

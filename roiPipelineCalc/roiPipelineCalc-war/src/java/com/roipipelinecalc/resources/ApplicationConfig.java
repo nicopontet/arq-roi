@@ -1,4 +1,4 @@
-package com.roiplanner.resources;
+package com.roipipelinecalc.resources;
 
 
 
@@ -18,8 +18,8 @@ public class ApplicationConfig extends Application {
 
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.roiplanner.filter.AuthorizeOnlyKremlinFilter.class);
-        resources.add(com.roiplanner.resources.PlanResource.class);
+       resources.add(com.roipipelinecalc.filter.AuthorizeOnlyKremlinFilter.class);
+       resources.add(com.roipipelinecalc.resources.RouteResource.class);
     }
     
 }

@@ -2,15 +2,19 @@
 package com.roisupplying.resources;
 
 import com.google.gson.Gson;
+import com.roisupplying.filter.OnlyKremlin;
 import com.roisupplying.order.entity.OrderSupplying;
-import com.roisupplying.order.imp.OrderBean;
+
 import com.roisupplying.order.imp.OrderBeanLocal;
-import java.util.List;
+import com.roisupplying.order.imp.RegistrationBean;
+import java.lang.annotation.Annotation;
+import java.util.Map;
+
+
 import javax.ejb.EJB;
-import javax.naming.NamingException;
+
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.POST;
-import javax.ws.rs.POST;
+
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,10 +32,13 @@ public class OrderResource {
         this.gson = new Gson();
     }
     
+    @OnlyKremlin
     @GET
     @Path("/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrder(@PathParam("orderId") int orderId) {
+     
+       
         OrderSupplying order = orderBeanLocal.getOrder(orderId);
 
         if (order == null) {

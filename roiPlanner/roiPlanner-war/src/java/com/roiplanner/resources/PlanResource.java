@@ -6,6 +6,7 @@
 package com.roiplanner.resources;
 
 import com.google.gson.Gson;
+import com.roiplanner.filter.OnlyKremlin;
 import com.roiplanner.plan.imp.entity.Plan;
 import com.roiplanner.plan.imp.PlanBeanLocal;
 import java.util.List;
@@ -49,7 +50,7 @@ public class PlanResource {
                 .entity(gson.toJson(plans))
                 .build();
     }
-    
+    @OnlyKremlin
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createPlan(String jsonPlan) {

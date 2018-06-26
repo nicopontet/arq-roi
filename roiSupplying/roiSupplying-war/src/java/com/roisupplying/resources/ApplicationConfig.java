@@ -14,6 +14,7 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.roisupplying.filter.AuthorizeOnlyKremlinFilter.class);
         resources.add(com.roisupplying.resources.OrderResource.class);
     }
     
