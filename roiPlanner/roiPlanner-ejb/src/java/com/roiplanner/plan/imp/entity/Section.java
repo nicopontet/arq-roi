@@ -1,10 +1,21 @@
 
 package com.roiplanner.plan.imp.entity;
 
-public class Section {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+@Entity
+public class Section implements Serializable {
+    @Id
     int sectionId;
     int sourceId;
     int actuatorId;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "service")
+    Plan plan;
     
     public Section(){}
 

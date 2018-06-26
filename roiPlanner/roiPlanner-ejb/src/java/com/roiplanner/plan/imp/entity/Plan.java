@@ -2,11 +2,14 @@
 package com.roiplanner.plan.imp.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Plan implements Serializable {
@@ -14,11 +17,21 @@ public class Plan implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int planId;
     private int orderId;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="plan")
     private List<Section> sections;
     private boolean canceled;
     private boolean approved;
 
     public Plan(){}
+
+    public Plan(int orderId) {
+        this.orderId = orderId;
+        boolean canceled=false;
+        boolean approved=false;
+        sections= new ArrayList<Section>(); 
+    }
+    
     
     public Plan(int planId,int orderId,boolean canceled, boolean approved,List<Section> sections) {
         this.planId = planId;

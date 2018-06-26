@@ -10,6 +10,7 @@ import com.roipipelinecalc.dto.RouteDTO;
 import com.roipipelinecalc.filter.OnlyKremlin;
 import com.roipipelinecalc.imp.CalcBean;
 import com.roipipelinecalc.imp.CalcBeanLocal;
+import com.roipipelinecalc.imp.RegistrationBean;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.naming.NamingException;
@@ -18,6 +19,7 @@ import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -51,6 +53,8 @@ public class RouteResource {
        }catch(NullPointerException ex){
             return Response
                 .status(Response.Status.BAD_REQUEST)
+                .header(HttpHeaders.AUTHORIZATION,RegistrationBean.TOKEN)
+                .entity("Error when obtaining supply route")
                 .build();
        } 
     }

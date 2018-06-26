@@ -6,7 +6,9 @@
 package com.roipipelinecalc.imp;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.roipipelinecalc.dto.RouteDTO;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -30,16 +32,18 @@ public class CalcBean implements CalcBeanLocal {
     @Override
     public RouteDTO getRouteSupply() {
         
-            Client client = ClientBuilder.newClient();
-           Response response = client.target(URL_GET_ROUTE_SUPPLY)
-                   .request(MediaType.APPLICATION_JSON_TYPE)
-                   .method("POST");
+        
+           Client client = ClientBuilder.newClient();
+           Response response = ExternalOperationsHandler.callOperation(URL_GET_ROUTE_SUPPLY, "POST", "");
 
            if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-                RouteDTO route= (RouteDTO) response.getEntity();
-                return route;
-           }
-        return null;
+                String routesString =response.readEntity(String.class);
+                RouteDTO routes = gson.fromJson(routesString, RouteDTO.class);
+                return routes;
+           }else{
+               return null;
+                 }
+       
         
     }
 

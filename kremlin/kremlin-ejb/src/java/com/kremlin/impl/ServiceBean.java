@@ -66,6 +66,9 @@ public class ServiceBean implements ServiceBeanLocal {
                 String operationUrl = service.getResources();
                 String method = service.getAdditionalData();
                 response = RESTImplementation.callOperation(token,service,jsonBody);
+                if (response.getStatus() != Response.Status.OK.getStatusCode()) { 
+                  
+                }
                 break;
             case JMS:
                 QueueDTO sendQueueDTO = new QueueDTO(token,jsonBody,serviceOperationName);
